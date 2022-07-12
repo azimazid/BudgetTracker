@@ -1,5 +1,6 @@
 import { Button, Stack } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
+import AddBudgetModal from "./components/AddBudgetModal";
 import BudgetCard from "./components/BudgetCard";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         ></BudgetCard>
       </div>
     </Container>
+    <AddBudgetModal show />
   );
 }
 
