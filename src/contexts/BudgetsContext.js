@@ -6,11 +6,26 @@ export function useBudgets() {
   return useContext(BudgetsContext);
 }
 
+/*{
+  id: 
+  name:
+  mas
+}
+
+{
+  id:
+  budgetId:
+  amount:
+  description:
+}*/
+
 export const BudgetsProvider = ({ children }) => {
   const [budgets, setBudgets] = useState([]);
   const [expenses, setExpense] = useState([]);
 
-  function getBudgetExpenses() {}
+  function getBudgetExpenses(budgetId) {
+    return expenses.filter(expense => expense.budgetId === budgetId)
+  }
   function addExpense() {}
   function addBudget() {}
   function deleteBudget() {}
