@@ -13,6 +13,7 @@ export function useBudgets() {
 export const BudgetsProvider = ({ children }) => {
   const [budgets, setBudgets] = useLocalStorage("budgets", []);
   const [expenses, setExpenses] = useLocalStorage("expenses", []);
+  const [incomes, setIncomes] = useLocalStorage("incomes", []);
 
   function getBudgetExpenses(budgetId) {
     return expenses.filter(expense => expense.budgetId === budgetId);
@@ -30,6 +31,15 @@ export const BudgetsProvider = ({ children }) => {
         return prevBudgets;
       }
       return [...prevBudgets, { id: uuidV4(), name, max }];
+    });
+  }
+
+  function addIncome({source, value}) {
+    setIncomes(prevIncomes => {
+      if (prevIncomes.find(income => income.source === source)) {
+        return prevIncomes;
+      }
+      return [...prevIncomes, { id: uuidV4(), source, value }];
     });
   }
 
@@ -51,6 +61,12 @@ export const BudgetsProvider = ({ children }) => {
     });
   }
 
+  function deleteIncome({ id }) {
+    setIncomes((prevIncomes) => {
+      return prevIncomes.filter((income) => income.id !== id);
+    });
+  }
+
   return (
     <BudgetsContext.Provider
       value={{
@@ -59,8 +75,10 @@ export const BudgetsProvider = ({ children }) => {
         getBudgetExpenses,
         addExpense,
         addBudget,
+        addIncome,
         deleteBudget,
         deleteExpense,
+        deleteIncome,
       }}
     >
       {children}

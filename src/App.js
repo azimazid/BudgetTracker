@@ -1,4 +1,4 @@
-import { Button, Stack } from "react-bootstrap";
+import { Button, Dropdown, ListGroup, Stack } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import AddBudgetModal from "./components/AddBudgetModal";
 import AddExpenseModal from "./components/AddExpenseModal";
@@ -24,14 +24,66 @@ function App() {
   return (
     <>
       <Container className="my-4">
-        <Stack
-          direction="horizontal"
-          gap="2"
-          className="d-flex justify-content-center mb-4"
-        >
-          <h1 className="mx-auto">Budget Tracker</h1>
+        <Stack direction="horizontal" gap="2" className="d-flex mb-4">
+          <h1 className="me-auto">Personal Cash Flow</h1>
+          <Dropdown>
+            <Dropdown.Toggle variant="warning">Month</Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Container>
+                <Row style={{minWidth: "50vw"}}>
+                  <Col>
+                    <ListGroup
+                  </Col>
+                </Row>
+              </Container>
+            </Dropdown.Menu>
+          </Dropdown>
         </Stack>
-        <Stack gap={2} className="col-md-5 mx-auto">
+        <Stack gap={2} className="mx-auto mb-3">
+          <TotalBudgetCard />
+        </Stack>
+        <Stack direction="horizontal" gap={2} className="mx-auto mt-3 mb-3">
+          <h3 className="me-auto">Monthly Income</h3>
+          <Button className="mb-1" variant="primary">
+            Add Income
+          </Button>
+        </Stack>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
+            gap: "2rem",
+            alignItems: "flex-start",
+          }}
+        >
+          {budgets.map((budget) => {
+            const amount = getBudgetExpenses(budget.id).reduce(
+              (total, expense) => total + expense.amount,
+              0
+            );
+            return (
+              <BudgetCard
+                key={budget.id}
+                name={budget.name}
+                amount={amount}
+                max={budget.max}
+                onAddExpenseClick={() => openAddExpenseModal(budget.id)}
+                onViewExpensesClick={() =>
+                  setViewExpenseModalBudgetId(budget.id)
+                }
+              />
+            );
+          })}
+          <UncategorizedBudgetCard
+            onAddExpenseClick={openAddExpenseModal}
+            onViewExpensesClick={() =>
+              setViewExpenseModalBudgetId(UNCATEGORIZED_BUDGET_ID)
+            }
+          />
+        </div>
+        <hr></hr>
+        <Stack direction="horizontal" gap={2} className="mx-auto mt-3 mb-3">
+          <h3 className="me-auto">Monthly Expenses</h3>
           <Button
             className="mb-1"
             variant="primary"
@@ -39,23 +91,15 @@ function App() {
           >
             Add Budget
           </Button>
-          <Button
-            className="mb-5"
-            variant="outline-primary"
-            onClick={openAddExpenseModal}
-          >
-            Add Expense
-          </Button>
         </Stack>
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(450px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
             gap: "2rem",
             alignItems: "flex-start",
           }}
         >
-          <TotalBudgetCard />
           {budgets.map((budget) => {
             const amount = getBudgetExpenses(budget.id).reduce(
               (total, expense) => total + expense.amount,
