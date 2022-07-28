@@ -1,16 +1,22 @@
-import { Form, Button, Modal } from "react-bootstrap";
-import { useRef } from "react";
+import { Form, Button, Modal, Stack, Dropdown } from "react-bootstrap";
+import { useRef, useState } from "react";
 import { useBudgets } from "../contexts/BudgetsContext";
+import { month } from "./MonthCategory";
+import DropdownItem from "react-bootstrap/esm/DropdownItem";
 
 export default function AddBudgetModal({ show, handleClose }) {
   const nameRef = useRef();
   const maxRef = useRef();
+  const monthRef = useRef();
+  const [selectedDate, setSelectedDate] = useState(null);
   const { addBudget } = useBudgets();
+
   function handleSubmit(e) {
     e.preventDefault();
     addBudget({
       name: nameRef.current.value,
       max: parseFloat(maxRef.current.value),
+      month: monthRef.current.value,
     });
     handleClose();
   }
@@ -19,7 +25,21 @@ export default function AddBudgetModal({ show, handleClose }) {
     <Modal show={show} onHide={handleClose}>
       <Form onSubmit={handleSubmit}>
         <Modal.Header closeButton>
-          <Modal.Title>New Budget</Modal.Title>
+          <Stack direction="horizontal" gap={2}>
+            <Modal.Title className="ms-auto">New Budget</Modal.Title>
+            <div className="me-auto">
+              <Dropdown>
+                <Dropdown.Toggle variant="success">
+                  Month
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    {month.map((month) => (
+                      <Dropdown.Item>{month}</Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          </Stack>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="mb-3" controlId="name">
