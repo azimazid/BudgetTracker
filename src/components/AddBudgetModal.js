@@ -29,14 +29,12 @@ export default function AddBudgetModal({ show, handleClose }) {
             <Modal.Title className="ms-auto">New Budget</Modal.Title>
             <div className="me-auto">
               <Dropdown>
-                <Dropdown.Toggle variant="success">
-                  Month
-                </Dropdown.Toggle>
+                <Dropdown.Toggle variant="success">Month</Dropdown.Toggle>
                 <Dropdown.Menu>
-                    {month.map((month) => (
-                      <Dropdown.Item>{month}</Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
+                  {month.map((month) => (
+                    <Dropdown.Item>{month}</Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
               </Dropdown>
             </div>
           </Stack>

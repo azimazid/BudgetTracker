@@ -8,7 +8,7 @@ import { useState } from "react";
 import { UNCATEGORIZED_BUDGET_ID, useBudgets } from "./contexts/BudgetsContext";
 import UncategorizedBudgetCard from "./components/UncategorizedBudgetCard";
 import TotalBudgetCard from "./components/TotalBudgetCard";
-
+import { month } from "./components/MonthCategory";
 
 function App() {
   const [showAddBudgetModal, setShowAddBudgetModal] = useState(false);
@@ -30,14 +30,9 @@ function App() {
           <Dropdown>
             <Dropdown.Toggle variant="warning">Month</Dropdown.Toggle>
             <Dropdown.Menu>
-              <Container>
-                <Row style={{ minWidth: "50vw" }}>
-                  <Col>
-                    <select>
-                    </select>
-                  </Col>
-                </Row>
-              </Container>
+              {month.map((month) => (
+                <Dropdown.Item>{month}</Dropdown.Item>
+              ))}
             </Dropdown.Menu>
           </Dropdown>
         </Stack>
