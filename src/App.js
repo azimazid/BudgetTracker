@@ -76,7 +76,7 @@ function App() {
                 name={budget.name}
                 amount={amount}
                 max={budget.max}
-                month={budget.month}
+                // month={budget.month}
                 onAddExpenseClick={() => openAddExpenseModal(budget.id)}
                 onViewExpensesClick={() =>
                   setViewExpenseModalBudgetId(budget.id)

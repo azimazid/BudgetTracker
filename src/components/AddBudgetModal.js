@@ -8,7 +8,6 @@ export default function AddBudgetModal({ show, handleClose }) {
   const nameRef = useRef();
   const maxRef = useRef();
   const monthRef = useRef();
-  const [selectedDate, setSelectedDate] = useState(null);
   const { addBudget } = useBudgets();
 
   function handleSubmit(e) {
@@ -16,7 +15,7 @@ export default function AddBudgetModal({ show, handleClose }) {
     addBudget({
       name: nameRef.current.value,
       max: parseFloat(maxRef.current.value),
-      month: monthRef.current.value,
+      //month: monthRef.current.value,
     });
     handleClose();
   }
